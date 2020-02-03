@@ -1,15 +1,16 @@
-﻿using Ferrum.Core;
+﻿using Ferrum.Core.Dtos;
+using Ferrum.Core.Structs;
 
 namespace Ferrum.FakeBank.Models
 {
     public class AuthoriseRequest
     {
-        private CardNumber? _cardNumber;
-        public string CardNumber { get; set; }
-        public int SecurityCode { get; set; }
-        public decimal Value { get; set; }
-        public string Currency { get; set; }
-        public string AccountHolder { get; set; }
-        public CardNumber CardStruct => _cardNumber ??= new CardNumber(CardNumber);
+        private Card? _card;
+        private CurrencyValue? _value;
+        
+        public CardDto Card { get; set; }
+        public CurrencyValueDto Value { get; set; }
+        public Card CardStruct => _card ??= new Card(Card.CardNumber, Card.ExpiryDate, Card.SecurityCode, Card.AccountHolderName);
+        public CurrencyValue ValueStruct => _value ??= new CurrencyValue(Value.CurrencyCode, Value.Amount);        
     }
 }

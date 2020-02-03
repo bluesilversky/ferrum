@@ -22,16 +22,18 @@ namespace Ferrum.FakeBank.Controllers
         [HttpPost]
         public AuthoriseResponse Post([FromBody] AuthoriseRequest request)
         {
-            if (request.SecurityCode == 200 && request.CardStruct.IsValid)
+            var card = request.CardStruct;
+                        
+            if (card.SecurityCode == 200 && card.CardNumber.IsValid)
                 return new AuthoriseResponse(AuthStatus.Authorised);
 
-            if (request.SecurityCode == 404)
+            if (card.SecurityCode == 404)
                 return new AuthoriseResponse(AuthStatus.Unknown);
 
-            if (request.SecurityCode == 500)
+            if (card.SecurityCode == 500)
                 throw new Exception();
 
-            if (request.SecurityCode == 501)
+            if (card.SecurityCode == 501)
                 return new AuthoriseResponse(AuthStatus.Error);
 
             return new AuthoriseResponse(AuthStatus.Declined);

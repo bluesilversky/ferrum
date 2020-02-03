@@ -1,4 +1,6 @@
-﻿namespace Ferrum.Core.Enums
+﻿using System.Collections.Generic;
+
+namespace Ferrum.Core.Enums
 {
     public enum AuthStatus
     {

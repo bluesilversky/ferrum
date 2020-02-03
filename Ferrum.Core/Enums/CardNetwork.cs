@@ -1,6 +1,7 @@
-﻿using Ferrum.Core.Extensions;
+﻿using Ferrum.Core.Structs;
+using Ferrum.Core.Extensions;
 
-namespace Ferrum.Core
+namespace Ferrum.Core.Enums
 {
     public enum CardNetwork
     {
