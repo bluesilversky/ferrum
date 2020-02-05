@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
-namespace Ferrum.Core.Enums
+namespace Ferrum.Core.Enums.Serializable
 {
     public enum AuthStatus
     {

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Text.RegularExpressions;
+﻿using Ferrum.Core.Enums.Serializable;
 
 namespace Ferrum.Core.Structs
 {
@@ -20,7 +18,9 @@ namespace Ferrum.Core.Structs
         internal CardNumber(byte[] digits)
         {
             Digits = digits;
-        }        
+        }
+
+        public CardNetwork CardNetwork => this.GetCardNetwork();
     }
 
     

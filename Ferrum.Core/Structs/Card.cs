@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Text.RegularExpressions;
-using Ferrum.Core.Enums;
+﻿using Ferrum.Core.Enums.Serializable;
 
 namespace Ferrum.Core.Structs
 {

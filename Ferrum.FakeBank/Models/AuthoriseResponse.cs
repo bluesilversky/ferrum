@@ -1,4 +1,4 @@
-﻿using Ferrum.Core.Enums;
+﻿using Ferrum.Core.Enums.Serializable;
 using System;
 
 namespace Ferrum.FakeBank.Models
@@ -8,11 +8,11 @@ namespace Ferrum.FakeBank.Models
         public Guid TransactionId { get; set; }
         
         public AuthStatus AuthStatus { get; set; }
+        
+        public CardNetwork CardNetwork { get; set; }
 
-        public AuthoriseResponse(AuthStatus status)
-        {
-            TransactionId = Guid.NewGuid();
-            AuthStatus = status;
-        }
+        public string CurrencyCode { get; set; }
+        
+        public decimal Amount { get; set; }
     }
 }

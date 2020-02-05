@@ -10,7 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Ferrum.Core.Serialization;
+using Ferrum.Core.Enums.Serializable;
+using Ferrum.Core.Extensions;
 
 namespace Ferrum.FakeBank
 {
@@ -26,9 +27,12 @@ namespace Ferrum.FakeBank
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            /*services.AddControllers()
+                .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new AuthStatusConverter()))
+                .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new CardNetworkConverter())); */
+
             services.AddControllers()
-                .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new AuthStatusConverter())
-                );            
+                .AddJsonOptions(options => options.JsonSerializerOptions.Converters.AddEnumSerializers());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

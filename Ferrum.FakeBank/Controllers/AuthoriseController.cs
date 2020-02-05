@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Ferrum.FakeBank.Models;
-using Ferrum.Core.Enums;
-using Microsoft.AspNetCore.Http;
+using Ferrum.Core.Enums.Serializable;
 using Microsoft.AspNetCore.Mvc;
+using Ferrum.Core.Structs;
+using System.Threading.Tasks;
 
 namespace Ferrum.FakeBank.Controllers
 {
@@ -20,23 +18,29 @@ namespace Ferrum.FakeBank.Controllers
         }
         
         [HttpPost]
-        public AuthoriseResponse Post([FromBody] AuthoriseRequest request)
+        public async Task<AuthoriseResponse> Post([FromBody] AuthoriseRequest request)
         {
-            var card = request.CardStruct;
+            var random = new Random().Next(0, 5);
+            if (random == 4)
+                throw new Exception("Random Exception");
+
+            await Task.Delay(random * 1000);
+            
+            var cardNumber = new CardNumber(request.CardNumber);
                         
-            if (card.SecurityCode == 200 && card.CardNumber.IsValid)
-                return new AuthoriseResponse(AuthStatus.Authorised);
+            if (request.SecurityCode == 200 && cardNumber.IsValid)
+                return request.Respond(AuthStatus.Authorised);
 
-            if (card.SecurityCode == 404)
-                return new AuthoriseResponse(AuthStatus.Unknown);
+            if (request.SecurityCode == 404)
+                return request.Respond(AuthStatus.Unknown);
 
-            if (card.SecurityCode == 500)
+            if (request.SecurityCode == 500)
                 throw new Exception();
 
-            if (card.SecurityCode == 501)
-                return new AuthoriseResponse(AuthStatus.Error);
+            if (request.SecurityCode == 501)
+                return request.Respond(AuthStatus.Error);
 
-            return new AuthoriseResponse(AuthStatus.Declined);
+            return request.Respond(AuthStatus.Declined);
         }        
     }
 }

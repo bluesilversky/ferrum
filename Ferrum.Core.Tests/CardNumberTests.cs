@@ -1,4 +1,4 @@
-using Ferrum.Core.Enums;
+using Ferrum.Core.Enums.Serializable;
 using Ferrum.Core.Structs;
 using NUnit.Framework;
 using System;
@@ -45,11 +45,11 @@ namespace Ferrum.Core.Tests
             var wrongStartsWith = new CardNumber("3534 783469 23498");
             var wrongLength = new CardNumber("3534 7834690 23498");
 
-            Assert.AreEqual(CardNetwork.Amex, new Card() { CardNumber = validAmex1 }.CardNetwork);
-            Assert.AreEqual(CardNetwork.Amex, new Card() { CardNumber = validAmex2 }.CardNetwork);
-            Assert.AreEqual(CardNetwork.Amex, new Card() { CardNumber = invalidAmex }.CardNetwork);
-            Assert.AreEqual(CardNetwork.Unknown, new Card() { CardNumber = wrongStartsWith }.CardNetwork);
-            Assert.AreEqual(CardNetwork.Unknown, new Card() { CardNumber = wrongLength }.CardNetwork);
+            Assert.AreEqual(CardNetwork.Amex, validAmex1.CardNetwork);
+            Assert.AreEqual(CardNetwork.Amex, validAmex2.CardNetwork);
+            Assert.AreEqual(CardNetwork.Amex, invalidAmex.CardNetwork);
+            Assert.AreEqual(CardNetwork.Unknown, wrongStartsWith.CardNetwork);
+            Assert.AreEqual(CardNetwork.Unknown, wrongLength.CardNetwork);
 
             Assert.IsTrue(validAmex1.IsValid);
             Assert.IsTrue(validAmex2.IsValid);

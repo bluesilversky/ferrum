@@ -1,7 +1,10 @@
 ﻿using Ferrum.Core.Structs;
 using Ferrum.Core.Extensions;
+using System.Text.Json.Serialization;
+using System.Text.Json;
+using System;
 
-namespace Ferrum.Core.Enums
+namespace Ferrum.Core.Enums.Serializable
 {
     public enum CardNetwork
     {
