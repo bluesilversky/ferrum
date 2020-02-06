@@ -1,8 +1,8 @@
-﻿using System;
-using Ferrum.FakeBank.Models;
-using Ferrum.Core.Enums.Serializable;
-using Microsoft.AspNetCore.Mvc;
+﻿using Ferrum.Core.Enums.Serializable;
+using Ferrum.Core.Models;
 using Ferrum.Core.Structs;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Ferrum.FakeBank.Controllers

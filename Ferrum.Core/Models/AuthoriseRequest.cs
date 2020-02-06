@@ -1,10 +1,10 @@
 ﻿using Ferrum.Core.Enums.Serializable;
 using Ferrum.Core.Structs;
-using Ferrum.FakeBank.Validation.CardDate;
+using Ferrum.Core.Validation.CardDate;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Ferrum.FakeBank.Models
+namespace Ferrum.Core.Models
 {
     public class AuthoriseRequest
     {
@@ -40,21 +40,4 @@ namespace Ferrum.FakeBank.Models
             return response;
         }
     }
-
-    /*public class Card
-    {
-        
-        public CardNetwork CardNetwork => CardNumber.GetCardNetwork();
-        public MonthYear ExpiryDate { get; set; }
-        public short SecurityCode { get; set; }
-        public string AccountHolderName { get; set; }
-
-        public Card(string cardNumber, string expiry, int securityCode, string accountHolder)
-        {
-            CardNumber = new CardNumber(cardNumber);
-            ExpiryDate = new MonthYear(expiry);
-            SecurityCode = CardValidation.ParseSecurityCode(securityCode);
-            AccountHolderName = accountHolder;
-        }
-    }*/
 }

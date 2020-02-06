@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Ferrum.Core.Extensions;
 
-namespace Ferrum.FakeBank.Validation.CardDate
+namespace Ferrum.Core.Validation.CardDate
 {
     public enum CardDateType
     {

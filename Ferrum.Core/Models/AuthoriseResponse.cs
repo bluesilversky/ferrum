@@ -1,11 +1,13 @@
 ﻿using Ferrum.Core.Enums.Serializable;
 using System;
 
-namespace Ferrum.FakeBank.Models
+namespace Ferrum.Core.Models
 {
     public class AuthoriseResponse
     {
         public Guid TransactionId { get; set; }
+
+        public DateTime TimeStampUtc { get; set; }
         
         public AuthStatus AuthStatus { get; set; }
         
