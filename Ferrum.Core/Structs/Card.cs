@@ -14,7 +14,7 @@ namespace Ferrum.Core.Structs
         {
             CardNumber = new CardNumber(cardNumber);
             ExpiryDate = new MonthYear(expiry);
-            SecurityCode = CardValidation.ParseSecurityCode(securityCode);
+            SecurityCode = CardNumberLogic.ParseSecurityCode(securityCode);
             AccountHolderName = accountHolder;
         }
     }    

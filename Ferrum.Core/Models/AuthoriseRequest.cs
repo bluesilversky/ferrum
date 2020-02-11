@@ -34,7 +34,8 @@ namespace Ferrum.Core.Models
                 CurrencyCode = CurrencyCode,
                 AuthStatus = authStatus,
                 TransactionId = Guid.NewGuid(),
-                CardNetwork = new CardNumber(CardNumber).CardNetwork
+                CardNetwork = new CardNumber(CardNumber).CardNetwork,
+                TimeStampUtc = DateTime.UtcNow
             };
 
             return response;

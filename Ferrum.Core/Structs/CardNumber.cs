@@ -8,11 +8,11 @@ namespace Ferrum.Core.Structs
 
         public int Length => Digits.Length;
 
-        public bool IsValid => CardValidation.GetLuhnCheckValue(Digits) == 0;
+        public bool IsValid => this.GetLuhnCheckValue() == 0;
         
         public CardNumber(string cardNumber)
         {
-            Digits = CardValidation.CreateCardNumberByteArray(cardNumber);
+            Digits = CardNumberLogic.CreateCardNumberByteArray(cardNumber);
         }
 
         internal CardNumber(byte[] digits)

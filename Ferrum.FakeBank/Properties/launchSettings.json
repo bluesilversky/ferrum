@@ -17,7 +17,7 @@
       }
     },
     "Ferrum.FakeBank": {
-      "commandName": "Project",
+      "commandName": "IISExpress",
       "launchUrl": "api/authorise",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Text.RegularExpressions;
-
-namespace Ferrum.Core.Structs
+﻿namespace Ferrum.Core.Structs
 {
     public struct CurrencyValue
     {

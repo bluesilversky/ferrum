@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Ferrum.Core\Ferrum.Core.csproj" />
     <ProjectReference Include="..\Ferrum.Gateway.Data\Ferrum.Gateway.Data.csproj" />
+    <ProjectReference Include="..\Ferrum.Gateway.Integrations\Ferrum.Gateway.Integrations.csproj" />
   </ItemGroup>
 
 

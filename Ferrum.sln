@@ -19,7 +19,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mocks", "Mocks", "{D710659E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ferrum.Gateway.Data", "Ferrum.Gateway.Data\Ferrum.Gateway.Data.csproj", "{E75EA9E3-98B5-454F-B211-60F48159F4AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ferrum.Gateway.Integrations", "Ferrum.Gateway.Integrations\Ferrum.Gateway.Integrations.csproj", "{BA46A4C7-9140-45B6-9B95-F01E16FBBF17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ferrum.Gateway.Integrations", "Ferrum.Gateway.Integrations\Ferrum.Gateway.Integrations.csproj", "{BA46A4C7-9140-45B6-9B95-F01E16FBBF17}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6F0FB4D0-BBCF-41B1-AA5D-2243894C1698}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -49,6 +49,9 @@ namespace Ferrum.Gateway.Data
                 defaultClient = new Client { Name = DefaultClientName };
                 dbContext.Add(defaultClient);
             }
+
+            dbContext.SaveChanges();
+
             return new Tuple<Client, GatewayDbContext>(defaultClient, dbContext);
         }
 
@@ -61,8 +64,9 @@ namespace Ferrum.Gateway.Data
             if (defaultLogin == null)
             {
                 defaultLogin = ClientLogin.CreateNewUser(DefaultLoginName);
+                defaultLogin.ClientId = client.Id;
                 defaultLogin.Password = PasswordUtils.HashPassword(DefaultPassword, defaultLogin.Salt);
-                defaultLogin.Client = client;
+                defaultLogin.ClientId = client.Id;
                 dbContext.Add(defaultLogin);
             }
         }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Ferrum.Core.Extensions;
 
 namespace Ferrum.Core.Structs

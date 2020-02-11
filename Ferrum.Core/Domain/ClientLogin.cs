@@ -8,7 +8,7 @@ namespace Ferrum.Core.Domain
         public string LoginName { get; set; }
         public string Password { get; set; }
         public string Salt { get; set; }
-        public virtual Client Client { get; set; }
+        public int ClientId { get; set; }
 
         public static ClientLogin CreateNewUser(string loginName)
         {

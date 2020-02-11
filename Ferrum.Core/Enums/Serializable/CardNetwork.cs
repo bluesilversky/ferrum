@@ -1,8 +1,5 @@
-﻿using Ferrum.Core.Structs;
-using Ferrum.Core.Extensions;
-using System.Text.Json.Serialization;
-using System.Text.Json;
-using System;
+﻿using Ferrum.Core.Extensions;
+using Ferrum.Core.Structs;
 
 namespace Ferrum.Core.Enums.Serializable
 {

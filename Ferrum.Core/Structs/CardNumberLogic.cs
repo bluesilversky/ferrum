@@ -1,11 +1,10 @@
 ﻿using Ferrum.Core.Extensions;
 using System;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Ferrum.Core.Structs
 {
-    internal static class CardValidation
+    internal static class CardNumberLogic
     {
         internal static byte[] CreateCardNumberByteArray(string cardNumber)
         {
@@ -13,7 +12,7 @@ namespace Ferrum.Core.Structs
             if (noSpaces.Length < 15) throw new ArgumentException("Not long enough.", nameof(cardNumber));
             if (noSpaces.Length > 19) throw new ArgumentException("Too long.", nameof(cardNumber));
 
-            if(!noSpaces.IsNumeric())
+            if (!noSpaces.IsNumeric())
                 throw new ArgumentException("Contains invalid characters. " +
                     "CardNumber can only contain digits 0-9 and space or dash seperators.", nameof(cardNumber));
 
@@ -21,11 +20,11 @@ namespace Ferrum.Core.Structs
             return result;
         }
 
-        internal static int GetLuhnCheckValue(byte[] digits)
+        internal static int GetLuhnCheckValue(this CardNumber cardNumber)
         {
             //taken from https://www.rosettacode.org/wiki/Luhn_test_of_credit_card_numbers#C.23
-
-            var result = digits.Select((d, i) => i % 2 == digits.Length % 2 ? ((2 * d) % 10) + d / 5 : d).Sum() % 10;
+            
+            var result = cardNumber.Digits.Select((d, i) => i % 2 == cardNumber.Digits.Length % 2 ? ((2 * d) % 10) + d / 5 : d).Sum() % 10;
 
             return result;
         }
@@ -36,6 +35,15 @@ namespace Ferrum.Core.Structs
                 throw new ArgumentOutOfRangeException("Security code should be between 000 and 9999");
 
             return (short)securityCode;
+        }
+
+        internal static string Last4Digits(this CardNumber cardNumber)
+        {
+            var result = string.Empty;
+            for (var i = cardNumber.Length - 1; i > cardNumber.Length - 4 - 1; i--)
+                result = cardNumber.Digits[i] + result;
+
+            return result;
         }
     }
 }
