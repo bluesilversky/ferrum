@@ -14,7 +14,7 @@ namespace Ferrum.Gateway.Integrations.Polly
 
         public static int GetRetryCount(this Context pollyContext)
         {
-            var counter = pollyContext[Index] as int?;
+            var counter = pollyContext.ContainsKey(Index) ? pollyContext[Index] as int? : 0;
             return counter ?? 0;           
         }
     }
