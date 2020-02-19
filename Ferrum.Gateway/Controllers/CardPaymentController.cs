@@ -3,6 +3,7 @@ using Ferrum.Core.Models;
 using Ferrum.Core.ServiceInterfaces;
 using Ferrum.Core.Structs;
 using Ferrum.Gateway.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -44,6 +45,7 @@ namespace Ferrum.Gateway.Controllers
 
         [HttpPost]
         [Route("authorise")]
+        
         public async Task<Transaction> AuthoriseTransaction(AuthoriseRequest request)
         {
             var response = _cardAuthoriser.AuthoriseAsync(request);
@@ -51,16 +53,20 @@ namespace Ferrum.Gateway.Controllers
 
             Task.WaitAll(response, clientLogin);
 
+            var cardNumber = new CardNumber(request.CardNumber);
+
             var transaction = new Transaction
             {
                 Amount = response.Result.Amount,
                 AuthStatus = response.Result.AuthStatus,
                 CardNetwork = response.Result.CardNetwork,
-                CardNumber = new CardNumber(request.CardNumber),
+                CardNumber = cardNumber,
+                CardNumberEnding = cardNumber.Last4Digits(),
                 ClientId = clientLogin.Result.ClientId,
                 ClientLoginId = clientLogin.Result.Id,
                 CurrencyCode = request.CurrencyCode,
-                TimeStampUtc = response.Result.TimeStampUtc
+                TimeStampUtc = response.Result.TimeStampUtc,
+                RetryAttempts = response.Result.RetryAttempts                
             };
 
             _dbContext.Transactions.Add(transaction);

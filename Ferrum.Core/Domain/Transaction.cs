@@ -16,6 +16,9 @@ namespace Ferrum.Core.Domain
         public string CardNumberEnding { get; set; }        
         public AuthStatus AuthStatus { get; set; }
         public CardNetwork CardNetwork { get; set; }
-        public int Attempts { get; set; }        
+        
+        //this could be pushed out and expanded into a seperate logging/audit table, 
+        //capturing response details and metrics about every request made to authorise the transaction.
+        public int RetryAttempts { get; set; }        
     }
 }

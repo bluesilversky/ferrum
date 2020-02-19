@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Ferrum.Core.Structs
 {
-    internal static class CardNumberLogic
+    public static class CardNumberLogic
     {
         internal static byte[] CreateCardNumberByteArray(string cardNumber)
         {
@@ -37,7 +37,7 @@ namespace Ferrum.Core.Structs
             return (short)securityCode;
         }
 
-        internal static string Last4Digits(this CardNumber cardNumber)
+        public static string Last4Digits(this CardNumber cardNumber)
         {
             var result = string.Empty;
             for (var i = cardNumber.Length - 1; i > cardNumber.Length - 4 - 1; i--)

@@ -8,6 +8,8 @@ namespace Ferrum.Core.Domain
         public string LoginName { get; set; }
         public string Password { get; set; }
         public string Salt { get; set; }
+
+        //todo: change to GUID, create new model to use in API
         public int ClientId { get; set; }
 
         public static ClientLogin CreateNewUser(string loginName)

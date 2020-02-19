@@ -1,4 +1,5 @@
 using Ferrum.Core.Extensions;
+using Ferrum.Core.ServiceInterfaces;
 using Ferrum.Gateway.Data;
 using Ferrum.Gateway.Integrations;
 using Microsoft.AspNetCore.Builder;
@@ -29,7 +30,7 @@ namespace Ferrum.Gateway
                 options.UseSqlServer(Configuration.GetConnectionString("GatewayDb"), 
                     sqlOpt => sqlOpt.EnableRetryOnFailure()));
 
-            services.AddCardAuthorisationClient();
+            services.AddHttpClient<ICardAuthorisation, FakeBankAuthorisation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
