@@ -55,7 +55,43 @@ namespace Ferrum.Core.Tests
             Assert.IsTrue(validAmex2.IsValid);
             Assert.IsFalse(invalidAmex.IsValid);
         }
+        
+        [Test]
+        public void MasterCardValidityTests()
+        {
+            var validMc = new CardNumber("5451564343386429");
+            var invalidMc = new CardNumber("5451564343386420");
+            var wrongStartsWith = new CardNumber("7451564343386429");
+            var wrongLength = new CardNumber("545156434338642");
 
-        // Further validity test cases required for Mastercard, Visa & Discover
+            Assert.AreEqual(CardNetwork.MasterCard, validMc.CardNetwork);
+            Assert.AreEqual(CardNetwork.MasterCard, invalidMc.CardNetwork);
+            Assert.AreEqual(CardNetwork.Unknown, wrongStartsWith.CardNetwork);
+            Assert.AreEqual(CardNetwork.Unknown, wrongLength.CardNetwork);
+
+            Assert.IsTrue(validMc.IsValid);
+            Assert.IsFalse(invalidMc.IsValid);
+            Assert.IsFalse(wrongStartsWith.IsValid);
+            Assert.IsFalse(wrongLength.IsValid);
+        }
+
+        [Test]
+        public void VisaValidityTests()
+        {
+            var validVisa = new CardNumber("4234 5678 9012 3456");
+            var invalidVisa = new CardNumber("4234 5678 9012 3457");
+            var wrongStartsWith = new CardNumber("3234 5678 9012 3456");
+            var wrongLength = new CardNumber("4234 567 9012 3456");
+
+            Assert.AreEqual(CardNetwork.Visa, validVisa.CardNetwork);
+            Assert.AreEqual(CardNetwork.Visa, invalidVisa.CardNetwork);
+            Assert.AreEqual(CardNetwork.Unknown, wrongStartsWith.CardNetwork);
+            Assert.AreEqual(CardNetwork.Unknown, wrongLength.CardNetwork);
+
+            Assert.IsTrue(validVisa.IsValid);
+            Assert.IsFalse(invalidVisa.IsValid);
+            Assert.IsFalse(wrongStartsWith.IsValid);
+            Assert.IsFalse(wrongLength.IsValid);
+        }
     }
 }

@@ -8,8 +8,12 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Ferrum.Gateway.Authorisation
+namespace Ferrum.Gateway.Authentication
 {
+    /// <summary>
+    /// Simple user authentication to demo action filters.
+    /// For authentication in production, I would recommend using Identity Server.
+    /// </summary>
     public class AuthoriseClient : ActionFilterAttribute
     {
         private GatewayDbContext _dbContext;

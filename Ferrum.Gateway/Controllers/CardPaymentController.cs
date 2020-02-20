@@ -2,9 +2,11 @@
 using Ferrum.Core.Models;
 using Ferrum.Core.ServiceInterfaces;
 using Ferrum.Core.Structs;
-using Ferrum.Gateway.Authorisation;
+using Ferrum.Gateway.Authentication;
 using Ferrum.Gateway.Data;
+using Ferrum.Gateway.ErrorHandling;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -46,6 +48,22 @@ namespace Ferrum.Gateway.Controllers
             await _dbContext.SaveChangesAsync();
 
             return response;
+        }
+
+
+        [HttpPost]
+        [Route("getTransaction")]
+        public async Task<IActionResult> GetTransaction(TransactionRequest request)
+        {
+            var transaction = await _dbContext.Transactions
+                .FirstOrDefaultAsync(tx => tx.TransactionId == request.TransactionId);
+
+            if (transaction == null)
+                return NotFound(new ErrorResponse { Message = "Transaction not found.", StatusCode = 404 });
+
+            var response = transaction.ToAuthResponse();
+
+            return Ok(response);
         }
     }
 }

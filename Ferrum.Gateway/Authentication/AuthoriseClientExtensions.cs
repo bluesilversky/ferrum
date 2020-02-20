@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Routing;
 using System;
 
-namespace Ferrum.Gateway.Authorisation
+namespace Ferrum.Gateway.Authentication
 {
     public static class AuthoriseClientExtensions
     {

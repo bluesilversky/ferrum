@@ -1,6 +1,6 @@
 using Ferrum.Core.Extensions;
 using Ferrum.Core.ServiceInterfaces;
-using Ferrum.Gateway.Authorisation;
+using Ferrum.Gateway.Authentication;
 using Ferrum.Gateway.Data;
 using Ferrum.Gateway.ErrorHandling;
 using Ferrum.Gateway.Integrations.FakeBank;

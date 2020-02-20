@@ -7,7 +7,7 @@ using Ferrum.Core.Structs;
 
 namespace Ferrum.Gateway.Integrations.FakeBank
 {
-    public static class ResponseMapping
+    /*public static class ResponseMapping
     {
         public static Transaction MakeTransaction(AuthoriseResponse authoriseResponse, CardNumber cardNumber, UserAccount userAccount, long processingTimeMs)
         {
@@ -29,5 +29,5 @@ namespace Ferrum.Gateway.Integrations.FakeBank
 
             return transaction;
         }
-    }
+    }*/
 }

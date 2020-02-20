@@ -43,5 +43,23 @@ namespace Ferrum.Core.Domain
 
             return transaction;
         }
+
+        public AuthoriseResponse ToAuthResponse()
+        {
+            var response = new AuthoriseResponse
+            {
+                Amount = Amount,
+                AuthStatus = AuthStatus,
+                CardNetwork = CardNetwork,
+                CardNumberEnding = CardNumberEnding,
+                CurrencyCode = CurrencyCode,
+                TimeStampUtc = TimeStampUtc,
+                RetryAttempts = RetryAttempts,
+                ProcessingTimeMs = ProcessingTimeMs,
+                TransactionId = TransactionId
+            };
+
+            return response;
+        }
     }
 }
