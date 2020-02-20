@@ -2,77 +2,50 @@
 using Ferrum.Core.Models;
 using Ferrum.Core.ServiceInterfaces;
 using Ferrum.Core.Structs;
+using Ferrum.Gateway.Authorisation;
 using Ferrum.Gateway.Data;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System.Linq;
+using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Ferrum.Gateway.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [ServiceFilter(typeof(AuthoriseClient))]
     public class CardPaymentController : ControllerBase
     {
-        private readonly ILogger<CardPaymentController> _logger;
         private readonly GatewayDbContext _dbContext;
         private readonly ICardAuthorisation _cardAuthoriser;
 
-        public CardPaymentController(ILogger<CardPaymentController> logger, 
+        public CardPaymentController(
             GatewayDbContext dbContext, 
             ICardAuthorisation cardAuthoriser)
         {
-            _logger = logger;
             _dbContext = dbContext;
             _cardAuthoriser = cardAuthoriser;
         }
         
-        [HttpGet]
-        [Route("login")]
-        public async Task<Client> GetLogin()
-        {
-            var result = await _dbContext.Clients
-                .AsNoTracking()
-                .Include(c => c.ClientLogins)
-                .FirstOrDefaultAsync(c => c.Name == GatewayContextSeeder.DefaultClientName);
-                
-            var defaultLogin = result.ClientLogins.FirstOrDefault();
-            
-            return result; 
-        }
-
         [HttpPost]
         [Route("authorise")]
-        
-        public async Task<Transaction> AuthoriseTransaction(AuthoriseRequest request)
+        public async Task<AuthoriseResponse> AuthoriseTransaction(AuthoriseRequest request)
         {
-            var response = _cardAuthoriser.AuthoriseAsync(request);
-            var clientLogin = _dbContext.ClientLogins.FirstOrDefaultAsync(cl => cl.LoginName == GatewayContextSeeder.DefaultLoginName);
-
-            Task.WaitAll(response, clientLogin);
-
+            var user = RouteData.GetUser();
             var cardNumber = new CardNumber(request.CardNumber);
+            var stopwatch = new Stopwatch();
+            
+            stopwatch.Start();
+            var response = await _cardAuthoriser.AuthoriseAsync(request);
+            stopwatch.Stop();
+            response.ProcessingTimeMs = Convert.ToInt32(stopwatch.ElapsedMilliseconds);
 
-            var transaction = new Transaction
-            {
-                Amount = response.Result.Amount,
-                AuthStatus = response.Result.AuthStatus,
-                CardNetwork = response.Result.CardNetwork,
-                CardNumber = cardNumber,
-                CardNumberEnding = cardNumber.Last4Digits(),
-                ClientId = clientLogin.Result.ClientId,
-                ClientLoginId = clientLogin.Result.Id,
-                CurrencyCode = request.CurrencyCode,
-                TimeStampUtc = response.Result.TimeStampUtc,
-                RetryAttempts = response.Result.RetryAttempts                
-            };
-
+            var transaction = Transaction.Create(response, cardNumber, user);
+            
             _dbContext.Transactions.Add(transaction);
             await _dbContext.SaveChangesAsync();
 
-            return transaction;
+            return response;
         }
     }
 }

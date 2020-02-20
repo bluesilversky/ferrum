@@ -1,7 +1,9 @@
 using Ferrum.Core.Extensions;
 using Ferrum.Core.ServiceInterfaces;
+using Ferrum.Gateway.Authorisation;
 using Ferrum.Gateway.Data;
-using Ferrum.Gateway.Integrations;
+using Ferrum.Gateway.ErrorHandling;
+using Ferrum.Gateway.Integrations.FakeBank;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -25,10 +27,12 @@ namespace Ferrum.Gateway
         {
             services.AddControllers()
                 .AddJsonOptions(opt => opt.JsonSerializerOptions.Converters.AddEnumSerializers());
-            
+
             services.AddDbContext<GatewayDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("GatewayDb"), 
+                options.UseSqlServer(Configuration.GetConnectionString("GatewayDb"),
                     sqlOpt => sqlOpt.EnableRetryOnFailure()));
+
+            services.AddScoped<AuthoriseClient>();
 
             services.AddHttpClient<ICardAuthorisation, FakeBankAuthorisation>();
         }
@@ -43,8 +47,9 @@ namespace Ferrum.Gateway
             }
             else
             {
-                 app.MigrateAndSeedGatewayDb(development: false);
-            }           
+                app.MigrateAndSeedGatewayDb(development: false);
+            }
+            app.ConfigureExceptionHandler();
 
             app.UseHttpsRedirection();
 

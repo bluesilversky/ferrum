@@ -10,7 +10,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Ferrum.Gateway.Integrations
+namespace Ferrum.Gateway.Integrations.FakeBank
 {
     public class FakeBankAuthorisation : ICardAuthorisation
     {
@@ -34,9 +34,9 @@ namespace Ferrum.Gateway.Integrations
                 .ExecuteAsync(c => _client.PostAsync("api/authorise", content), pollyContext);
 
             if (!httpResponse.IsSuccessStatusCode)
-            { 
-                var errorResponse = request.Respond(AuthStatus.Error);
-                errorResponse.RetryAttempts = pollyContext.GetRetryCount();
+            {
+                var errorResponse = AuthoriseResponse.CreateFailedResponse(
+                    request, pollyContext.GetRetryCount());
                 
                 return errorResponse;
             }

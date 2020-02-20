@@ -1,6 +1,6 @@
 ﻿using Ferrum.Core.Enums.Serializable;
-using Ferrum.Core.Models;
 using Ferrum.Core.Structs;
+using Ferrum.FakeBank.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -20,7 +20,7 @@ namespace Ferrum.FakeBank.Controllers
         [HttpPost]
         public async Task<AuthoriseResponse> Post([FromBody] AuthoriseRequest request)
         {
-            var random = new Random().Next(0, 5);
+            var random = new Random().Next(0, 4);
             if (random == 4)
                 throw new Exception("Random Exception");
 

@@ -11,8 +11,8 @@ namespace Ferrum.Gateway.Data
     public static class GatewayContextSeeder
     {
         public static string DefaultClientName = "Acme Limited (Default Client)";
-        public static string DefaultLoginName = "Acme_User";
-        public static string DefaultPassword = "Password123!";
+        public static string DefaultUserId = "a37b078f-31e5-437a-8006-3766930ff670";
+        public static string DefaultSecret = "Password123!";
 
         public static void MigrateAndSeedGatewayDb(this IApplicationBuilder app, bool development = false)
         {
@@ -41,7 +41,7 @@ namespace Ferrum.Gateway.Data
         internal static Tuple<Client, GatewayDbContext> AddDefaultClient(this GatewayDbContext dbContext)
         {
             var defaultClient = dbContext.Clients
-                .Include(c => c.ClientLogins)
+                .Include(c => c.UserAccounts)
                 .FirstOrDefault(c => c.Name == DefaultClientName);
 
             if (defaultClient == null)
@@ -59,14 +59,16 @@ namespace Ferrum.Gateway.Data
         {
             var client = clientResult.Item1;
             var dbContext = clientResult.Item2;
+            var defaultUserIdGuid = new Guid(DefaultUserId);
 
-            var defaultLogin = client.ClientLogins.FirstOrDefault(login => login.LoginName == DefaultLoginName);
+            var defaultLogin = client.UserAccounts.FirstOrDefault(login => login.UserId == defaultUserIdGuid);
             if (defaultLogin == null)
             {
-                defaultLogin = ClientLogin.CreateNewUser(DefaultLoginName);
+                defaultLogin = UserAccount.CreateNewUser();
                 defaultLogin.ClientId = client.Id;
-                defaultLogin.Password = PasswordUtils.HashPassword(DefaultPassword, defaultLogin.Salt);
-                defaultLogin.ClientId = client.Id;
+                defaultLogin.UserId = defaultUserIdGuid;
+                defaultLogin.UserSecret = PasswordUtils.HashPassword(DefaultSecret, defaultLogin.Salt);
+                
                 dbContext.Add(defaultLogin);
             }
         }

@@ -8,7 +8,7 @@ namespace Ferrum.Gateway.Integrations.Polly
 
         public static Context IncrementRetryCount(this Context pollyContext)
         {
-            pollyContext[Index] = pollyContext.ContainsKey(Index) ? (int)pollyContext[Index] + 1 : 0;
+            pollyContext[Index] = pollyContext.ContainsKey(Index) ? (int)pollyContext[Index] + 1 : 1;
             return pollyContext;
         }
 

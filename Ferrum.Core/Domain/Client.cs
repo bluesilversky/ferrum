@@ -6,6 +6,6 @@ namespace Ferrum.Core.Domain
     {
         public int Id { get; set; }
         public string Name { get; set; }        
-        public ICollection<ClientLogin> ClientLogins { get; set; } = new List<ClientLogin>();
+        public ICollection<UserAccount> UserAccounts { get; set; } = new List<UserAccount>();
     }
 }

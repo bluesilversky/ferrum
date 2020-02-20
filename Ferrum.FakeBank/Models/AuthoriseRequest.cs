@@ -4,9 +4,9 @@ using Ferrum.Core.Validation.CardDate;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Ferrum.Core.Models
+namespace Ferrum.FakeBank.Models
 {
-    public class AuthoriseRequest: IUserRequest
+    public class AuthoriseRequest
     {
         [CreditCard]
         public string CardNumber { get; set; }
@@ -26,8 +26,22 @@ namespace Ferrum.Core.Models
         [Range(0.01, double.MaxValue, ErrorMessage = "Amount must be greater than 0.")]
         public decimal Amount { get; set; }
 
-        public string UserId { get; set; }
+        public AuthoriseResponse Respond(AuthStatus authStatus)
+        {
+            var cardNumber = new CardNumber(CardNumber);
 
-        public string UserSecret { get; set; }
+            var response = new AuthoriseResponse()
+            {
+                Amount = Amount,
+                CurrencyCode = CurrencyCode,
+                AuthStatus = authStatus,
+                TransactionId = Guid.NewGuid(),
+                CardNetwork = cardNumber.CardNetwork,
+                CardNumberEnding = cardNumber.Last4Digits(),
+                TimeStampUtc = DateTime.UtcNow
+            };
+
+            return response;
+        }
     }
 }
